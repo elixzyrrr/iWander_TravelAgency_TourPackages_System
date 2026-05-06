@@ -10,6 +10,7 @@ export default defineConfig({
                 'resources/css/admin.css',
                 'resources/css/booking.css',
                 'resources/css/landing_page.css',
+                'resources/css/login.css',
                 'resources/css/user_dashboard.css',
                 'resources/css/signup.css',
                 'resources/js/app.js',
