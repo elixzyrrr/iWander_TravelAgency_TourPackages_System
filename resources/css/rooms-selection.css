@@ -1,0 +1,458 @@
+/* ===================================
+   Rooms Selection Page Styling
+   =================================== */
+
+:root {
+    --primary-color: #237f87;
+    --secondary-color: #f8f9fa;
+    --border-color: #e0e0e0;
+    --text-primary: #1a1a1a;
+    --text-secondary: #666666;
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--secondary-color);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+/* Navigation Bar */
+.navbar {
+    background-color: var(--primary-color);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.logo-section svg {
+    width: 32px;
+    height: 32px;
+}
+
+.logo-text {
+    font-family: 'Gwendolyn', cursive;
+}
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.back-btn:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.back-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Main Content */
+.main-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+    padding-bottom: 120px;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.breadcrumb-item {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb-item:hover {
+    color: var(--primary-color);
+}
+
+.breadcrumb-item.active {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.breadcrumb-sep {
+    color: var(--border-color);
+}
+
+/* Hotel Summary */
+.hotel-summary {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.summary-header {
+    margin-bottom: 1rem;
+}
+
+.summary-header h2 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.summary-destination {
+    display: inline-block;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    background-color: var(--secondary-color);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+}
+
+.summary-details {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.summary-item svg {
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+/* Rooms Container */
+.rooms-container {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+/* Rooms List */
+.rooms-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.room-card {
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.room-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-color: var(--primary-color);
+}
+
+.room-selection {
+    display: block;
+}
+
+.room-radio {
+    display: none;
+}
+
+.room-label {
+    display: block;
+    padding: 1.5rem;
+    cursor: pointer;
+}
+
+.room-card input[type="radio"]:checked + label {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #1a6470 100%);
+    color: white;
+}
+
+.room-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.room-type {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.room-availability {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.room-card input[type="radio"]:checked ~ label .room-availability {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.room-details {
+    margin-bottom: 1rem;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+}
+
+.detail-item svg {
+    flex-shrink: 0;
+}
+
+.room-description {
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+}
+
+.amenities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.amenity-tag {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    padding: 0.35rem 0.75rem;
+    border-radius: 16px;
+    font-size: 0.85rem;
+}
+
+.room-card input[type="radio"]:checked ~ label .amenity-tag {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.room-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.room-card input[type="radio"]:checked ~ label .room-price {
+    border-color: rgba(255,255,255,0.2);
+}
+
+.price-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.room-card input[type="radio"]:checked ~ label .price-label {
+    color: rgba(255,255,255,0.8);
+}
+
+.price-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.room-card input[type="radio"]:checked ~ label .price-value {
+    color: white;
+}
+
+/* Sticky Footer */
+.sticky-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 1.5rem 2rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    z-index: 999;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+}
+
+.btn-confirm {
+    flex: 1;
+    max-width: 500px;
+    padding: 1rem 2rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-confirm:hover:not(:disabled) {
+    background-color: #1a6470;
+}
+
+.btn-confirm:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 1.5rem;
+        padding-bottom: 120px;
+    }
+
+    .nav-container {
+        padding: 1rem;
+    }
+
+    .logo-section {
+        gap: 0.25rem;
+    }
+
+    .logo-section svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    .back-btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    .summary-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+    }
+
+    .room-header {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .room-type {
+        font-size: 1.1rem;
+    }
+
+    .sticky-footer {
+        padding: 1rem;
+    }
+
+    .btn-confirm {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content {
+        padding: 1rem;
+        padding-bottom: 100px;
+    }
+
+    .nav-container {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0.75rem;
+    }
+
+    .breadcrumb {
+        font-size: 0.8rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .summary-header h2 {
+        font-size: 1.25rem;
+    }
+
+    .summary-details {
+        gap: 1rem;
+        flex-direction: column;
+    }
+
+    .room-label {
+        padding: 1rem;
+    }
+
+    .room-price {
+        flex-direction: column;
+        align-items: start;
+        gap: 0.5rem;
+    }
+
+    .price-value {
+        font-size: 1.25rem;
+    }
+
+    .sticky-footer {
+        padding: 0.75rem;
+    }
+
+    .btn-confirm {
+        padding: 0.875rem 1.5rem;
+        font-size: 0.95rem;
+    }
+}

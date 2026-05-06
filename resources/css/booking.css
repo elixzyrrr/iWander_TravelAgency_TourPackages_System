@@ -1,0 +1,86 @@
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f9fafb; min-height: 100vh; }
+
+        /* Top Bar */
+        .top-bar { background: white; padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .logo-section { display: flex; align-items: center; gap: 12px; }
+        .logo-section svg { width: 32px; height: 28px; }
+        .logo-text { font-family: 'Gwendolyn', cursive; font-size: 24px; font-weight: 700; color: #237f87; }
+        .back-btn { padding: 8px 16px; background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 8px; color: #374151; font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.2s; }
+        .back-btn:hover { background: #e5e7eb; }
+
+        /* Progress Bar */
+        .progress-bar { background: white; padding: 24px 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .progress-container { max-width: 800px; margin: 0 auto; }
+        .steps { display: flex; justify-content: space-between; position: relative; }
+        .steps::before { content: ''; position: absolute; top: 20px; left: 0; right: 0; height: 2px; background: #e5e7eb; z-index: 0; }
+        .step { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; flex: 1; }
+        .step-circle { width: 40px; height: 40px; border-radius: 50%; background: white; border: 2px solid #e5e7eb; display: flex; align-items: center; justify-content: center; font-weight: 600; color: #6b7280; margin-bottom: 8px; }
+        .step.active .step-circle { background: #237f87; border-color: #237f87; color: white; }
+        .step.completed .step-circle { background: #10b981; border-color: #10b981; color: white; }
+        .step-label { font-size: 14px; color: #6b7280; text-align: center; }
+        .step.active .step-label { color: #237f87; font-weight: 600; }
+
+        /* Main Container */
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 32px; display: grid; grid-template-columns: 1fr 380px; gap: 32px; }
+
+        /* Flight Summary */
+        .summary-card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); height: fit-content; position: sticky; top: 32px; }
+        .summary-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; color: #101828; }
+        .flight-info { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #e5e7eb; }
+        .airline-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .airline-flag { font-size: 32px; }
+        .airline-name { font-size: 16px; font-weight: 600; color: #101828; }
+        .route { font-size: 14px; color: #6b7280; margin-bottom: 8px; }
+        .route strong { color: #101828; }
+        .time-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; }
+        .price-row { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; }
+        .price-label { font-size: 14px; color: #6b7280; }
+        .price-value { font-size: 24px; font-weight: 700; color: #237f87; }
+
+        /* Form Card */
+        .form-card { background: white; border-radius: 16px; padding: 32px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .form-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; color: #101828; }
+        .form-subtitle { font-size: 14px; color: #6b7280; margin-bottom: 24px; }
+
+        /* Passenger Section */
+        .passenger-section { margin-bottom: 32px; padding: 24px; background: #f9fafb; border-radius: 12px; border: 2px solid #e5e7eb; }
+        .passenger-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .passenger-title { font-size: 18px; font-weight: 600; color: #101828; }
+        .remove-btn { padding: 6px 12px; background: #fee2e2; color: #dc2626; border: none; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+        .remove-btn:hover { background: #fecaca; }
+
+        /* Form Grid */
+        .form-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px; }
+        .form-row.two-col { grid-template-columns: repeat(2, 1fr); }
+        .form-row.full { grid-template-columns: 1fr; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-label { font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 6px; }
+        .form-label .required { color: #ef4444; }
+        .form-input, .form-select { padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; font-family: 'Inter', sans-serif; transition: all 0.2s; }
+        .form-input:focus, .form-select:focus { outline: none; border-color: #237f87; box-shadow: 0 0 0 3px rgba(35, 127, 135, 0.1); }
+        .form-input.error, .form-select.error { border-color: #ef4444; }
+        .error-message { font-size: 12px; color: #ef4444; margin-top: 4px; }
+        .form-textarea { padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; font-family: 'Inter', sans-serif; min-height: 100px; resize: vertical; }
+
+        /* Buttons */
+        .add-passenger-btn { width: 100%; padding: 12px; background: #f3f4f6; color: #374151; border: 2px dashed #d1d5db; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 24px; }
+        .add-passenger-btn:hover { background: #e5e7eb; border-color: #237f87; color: #237f87; }
+        .add-passenger-btn svg { width: 20px; height: 20px; }
+
+        .action-buttons { display: flex; gap: 16px; margin-top: 32px; }
+        .btn { padding: 14px 28px; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s; flex: 1; }
+        .btn-primary { background: #237f87; color: white; }
+        .btn-primary:hover { background: #1a6269; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(35, 127, 135, 0.3); }
+        .btn-secondary { background: #f3f4f6; color: #374151; }
+        .btn-secondary:hover { background: #e5e7eb; }
+
+        /* Alert */
+        .alert { padding: 12px 16px; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; color: #92400e; font-size: 14px; margin-bottom: 24px; display: none; }
+        .alert.show { display: block; }
+
+        @media (max-width: 1024px) {
+            .main-container { grid-template-columns: 1fr; }
+            .summary-card { position: static; }
+            .form-row { grid-template-columns: 1fr; }
+        }

@@ -1,0 +1,99 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f9fafb; min-height: 100vh; }
+
+        /* Top Bar */
+        .top-bar { background: white; padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .logo-section { display: flex; align-items: center; gap: 12px; }
+        .logo-section svg { width: 32px; height: 28px; }
+        .logo-text { font-family: 'Gwendolyn', cursive; font-size: 24px; font-weight: 700; color: #237f87; }
+        .back-btn { padding: 8px 16px; background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 8px; color: #374151; font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.2s; }
+        .back-btn:hover { background: #e5e7eb; }
+
+        /* Progress Bar */
+        .progress-bar { background: white; padding: 24px 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .progress-container { max-width: 800px; margin: 0 auto; }
+        .steps { display: flex; justify-content: space-between; position: relative; }
+        .steps::before { content: ''; position: absolute; top: 20px; left: 0; right: 0; height: 2px; background: #e5e7eb; z-index: 0; }
+        .step { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; flex: 1; }
+        .step-circle { width: 40px; height: 40px; border-radius: 50%; background: white; border: 2px solid #e5e7eb; display: flex; align-items: center; justify-content: center; font-weight: 600; color: #6b7280; margin-bottom: 8px; }
+        .step.active .step-circle { background: #237f87; border-color: #237f87; color: white; }
+        .step.completed .step-circle { background: #10b981; border-color: #10b981; color: white; }
+        .step-label { font-size: 14px; color: #6b7280; text-align: center; }
+        .step.active .step-label { color: #237f87; font-weight: 600; }
+
+        /* Main Container */
+        .main-container { max-width: 1400px; margin: 0 auto; padding: 32px; display: grid; grid-template-columns: 1fr 380px; gap: 32px; }
+
+        /* Seat Map Card */
+        .seat-map-card { background: white; border-radius: 16px; padding: 32px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .card-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; color: #101828; }
+        .card-subtitle { font-size: 14px; color: #6b7280; margin-bottom: 24px; }
+
+        /* Legend */
+        .legend { display: flex; gap: 24px; margin-bottom: 32px; padding: 16px; background: #f9fafb; border-radius: 12px; flex-wrap: wrap; }
+        .legend-item { display: flex; align-items: center; gap: 8px; }
+        .legend-seat { width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; }
+        .legend-seat.available { background: white; border: 2px solid #d1d5db; color: #6b7280; }
+        .legend-seat.selected { background: #10b981; color: white; }
+        .legend-seat.occupied { background: #e5e7eb; color: #9ca3af; cursor: not-allowed; }
+        .legend-seat.premium { background: #dbeafe; border: 2px solid #3b82f6; color: #1e40af; }
+        .legend-label { font-size: 13px; color: #374151; }
+
+        /* Airplane */
+        .airplane { max-width: 600px; margin: 0 auto; }
+        .airplane-nose { text-align: center; font-size: 48px; margin-bottom: 16px; }
+        
+        /* Class Sections */
+        .class-section { margin-bottom: 32px; }
+        .class-header { background: #f3f4f6; padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+        .class-name { font-size: 16px; font-weight: 600; color: #101828; }
+        .class-price { font-size: 14px; color: #237f87; font-weight: 600; }
+
+        /* Seat Grid */
+        .seat-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; margin-bottom: 8px; }
+        .seat-row-label { display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: #6b7280; }
+        .seat { width: 40px; height: 40px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .seat.available { background: white; border: 2px solid #d1d5db; color: #6b7280; }
+        .seat.available:hover { border-color: #237f87; transform: scale(1.1); }
+        .seat.selected { background: #10b981; color: white; border: 2px solid #059669; }
+        .seat.occupied { background: #e5e7eb; color: #9ca3af; cursor: not-allowed; border: 2px solid #d1d5db; }
+        .seat.premium { background: #dbeafe; border: 2px solid #3b82f6; color: #1e40af; }
+        .seat.premium:hover { border-color: #2563eb; transform: scale(1.1); }
+        .seat.aisle { visibility: hidden; }
+
+        /* Selected Seats Panel */
+        .selected-panel { background: #f0fdfa; border: 2px solid #5eead4; border-radius: 12px; padding: 16px; margin-top: 24px; }
+        .selected-title { font-size: 16px; font-weight: 600; color: #101828; margin-bottom: 12px; }
+        .selected-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+        .selected-seat-tag { background: #10b981; color: white; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+        .selected-seat-tag button { background: none; border: none; color: white; cursor: pointer; font-size: 16px; line-height: 1; }
+        .no-selection { color: #6b7280; font-size: 14px; }
+
+        /* Summary Card */
+        .summary-card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); height: fit-content; position: sticky; top: 32px; }
+        .summary-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; color: #101828; }
+        .summary-section { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #e5e7eb; }
+        .summary-section:last-child { border-bottom: none; padding-bottom: 0; }
+        .summary-label { font-size: 13px; color: #6b7280; margin-bottom: 4px; }
+        .summary-value { font-size: 15px; color: #101828; font-weight: 500; }
+        .price-breakdown { display: flex; flex-direction: column; gap: 8px; }
+        .price-row { display: flex; justify-content: space-between; font-size: 14px; }
+        .total-row { font-size: 18px; font-weight: 700; color: #237f87; padding-top: 12px; border-top: 2px solid #e5e7eb; margin-top: 12px; }
+
+        /* Buttons */
+        .action-buttons { display: flex; gap: 12px; margin-top: 24px; }
+        .btn { padding: 14px 28px; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s; flex: 1; }
+        .btn-primary { background: #237f87; color: white; }
+        .btn-primary:hover:not(:disabled) { background: #1a6269; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(35, 127, 135, 0.3); }
+        .btn-primary:disabled { background: #d1d5db; cursor: not-allowed; }
+        .btn-secondary { background: #f3f4f6; color: #374151; }
+        .btn-secondary:hover { background: #e5e7eb; }
+
+        /* Alert */
+        .alert { padding: 12px 16px; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; color: #92400e; font-size: 14px; margin-bottom: 24px; display: none; }
+        .alert.show { display: block; }
+
+        @media (max-width: 1200px) {
+            .main-container { grid-template-columns: 1fr; }
+            .summary-card { position: static; }
+        }
