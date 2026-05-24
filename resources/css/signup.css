@@ -86,6 +86,15 @@
             position: relative;
         }
 
+        .input-group.has-error input {
+            border: 1px solid #fca5a5;
+            background: #fff5f5;
+        }
+
+        .input-group.has-error .input-icon {
+            color: #dc2626;
+        }
+
         .input-icon {
             position: absolute;
             left: 16px;
@@ -122,6 +131,35 @@
             outline: none;
             border-color: #237f87;
             box-shadow: 0 0 0 2px #237f87;
+        }
+
+        .input-group.has-error input:focus {
+            border-color: #dc2626;
+            box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+        }
+
+        .error-message {
+            padding: 12px 16px;
+            background: #fee2e2;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            color: #991b1b;
+            font-size: 14px;
+        }
+
+        .field-error {
+            width: 100%;
+            margin-top: 8px;
+            padding-left: 16px;
+            color: #dc2626;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .field-error-top {
+            display: block;
+            margin: 0 0 -2px;
+            padding-left: 16px;
         }
 
         .toggle-password {
@@ -206,6 +244,53 @@
 
         .btn-submit:hover svg {
             transform: translateX(4px);
+        }
+
+        .btn-cancel {
+            width: 100%;
+            background: transparent;
+            height: 56px;
+            border-radius: 28px;
+            border: 1.5px solid #d1d5db;
+            font-size: 16px;
+            font-weight: 600;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            margin-top: 8px;
+        }
+
+        .btn-cancel:hover {
+            border-color: #237f87;
+            color: #237f87;
+            background: rgba(35, 127, 135, 0.05);
+        }
+
+        .login-link {
+            margin-top: 24px;
+            text-align: center;
+        }
+
+        .login-link-text {
+            margin: 0;
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .login-link a {
+            color: #237f87;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
         }
 
         

@@ -10,7 +10,7 @@
             <div class="admin-card-header">
                 <div>
                     <h2 class="admin-card-title">Locked Accounts</h2>
-                    <p class="admin-card-copy">These users are flagged directly in the database.</p>
+
                 </div>
             </div>
 
@@ -55,7 +55,7 @@
             <div class="admin-card-header">
                 <div>
                     <h2 class="admin-card-title">Password Reset</h2>
-                    <p class="admin-card-copy">Creates a reset token in the password_reset_tokens table.</p>
+
                 </div>
             </div>
 
@@ -72,7 +72,7 @@
                 <div class="admin-card-header">
                     <div>
                         <h3 class="admin-card-title">Token Count</h3>
-                        <p class="admin-card-copy">Current reset tokens in the database.</p>
+
                     </div>
                 </div>
                 <div class="admin-stat-value" style="font-size: 1.75rem;">{{ $resetTokenCount }}</div>

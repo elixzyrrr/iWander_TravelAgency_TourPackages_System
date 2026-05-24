@@ -40,7 +40,7 @@
                 <div class="admin-card-header">
                     <div>
                         <h3 class="admin-card-title">Email Notifications</h3>
-                        <p class="admin-card-copy">Stored as boolean-style values in admin_settings.</p>
+
                     </div>
                 </div>
                 <div class="admin-form-grid">

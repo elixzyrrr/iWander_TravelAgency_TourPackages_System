@@ -696,3 +696,107 @@ textarea {
     width: 0 !important;
     height: 0 !important;
 }
+
+/* Status: text-only color variants
+   Remove background, border and button-like appearance for status badges/chips.
+   Status color is applied to the text only. */
+.status-badge,
+.admin-badge,
+.admin-chip,
+.admin-chip.active,
+.admin-chip.inactive,
+.admin-chip.locked,
+.admin-chip.role {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    display: inline !important;
+    border-radius: 0 !important;
+    vertical-align: baseline !important;
+}
+
+/* Keep weight and spacing but use color only */
+.status-badge,
+.admin-badge,
+.admin-chip {
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+/* Common status color mappings */
+.status-active,
+.admin-chip.active {
+    color: var(--admin-success) !important;
+}
+
+.status-pending {
+    color: var(--admin-warning) !important;
+}
+
+.status-confirmed {
+    color: var(--admin-primary-dark) !important;
+}
+
+.status-cancelled,
+.admin-chip.inactive {
+    color: var(--admin-danger) !important;
+}
+
+/* Generic fallbacks for other status names */
+.status-accepted { color: var(--admin-success) !important; }
+.status-declined { color: var(--admin-danger) !important; }
+.status-locked { color: #92400e !important; }
+
+/* Global fallback: any element with a class containing "status-" should be text-only */
+[class*="status-"] {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: inline !important;
+    border-radius: 0 !important;
+    line-height: inherit !important;
+}
+
+/* Ensure anchor/buttons with status classes don't keep button chrome */
+button[class*="status-"],
+a[class*="status-"] {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+/* Strong final override: ensure status badges never render as pills/buttons */
+table span.status-badge,
+.table-wrapper span.status-badge,
+span.status-badge,
+.status-badge {
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    display: inline !important;
+    vertical-align: baseline !important;
+}
+
+/* If any button/anchor is used for status, strip button chrome */
+button.status-badge, a.status-badge, button[class*="status-"], a[class*="status-"] {
+    appearance: none !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+/* Re-apply color-only mapping for common statuses to ensure color survives overrides */
+.status-active, .status-published { color: var(--admin-success) !important; }
+.status-pending { color: var(--admin-warning) !important; }
+.status-confirmed { color: var(--admin-primary-dark) !important; }
+.status-cancelled { color: var(--admin-danger) !important; }
+

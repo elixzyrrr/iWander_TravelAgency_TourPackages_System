@@ -94,6 +94,8 @@ Route::prefix('agent')->middleware('auth')->name('agent.')->group(function () {
     Route::get('/{module}', [AgentModuleController::class, 'module'])
         ->whereIn('module', ['bookings', 'customers', 'flights', 'hotels', 'packages', 'reports', 'settings'])
         ->name('module');
+    Route::patch('/bookings/{booking}', [AgentModuleController::class, 'updateBookingStatus'])
+        ->name('bookings.update');
     Route::post('/{module}', [AgentModuleController::class, 'store'])
         ->whereIn('module', ['bookings', 'flights', 'hotels', 'packages'])
         ->name('module.store');

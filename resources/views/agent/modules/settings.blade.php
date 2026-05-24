@@ -9,7 +9,7 @@
         <div class="panel-header">
             <div>
                 <h2 class="panel-title">Agent Settings</h2>
-                <div class="panel-subtitle">Update the agent-specific settings stored in the database.</div>
+
             </div>
         </div>
 

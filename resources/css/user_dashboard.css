@@ -1,4 +1,5 @@
-  * {
+
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -141,7 +142,6 @@
         .stat-value {
             font-weight: 700;
             font-size: 16px;
-            text-align: right;
         }
 
         .sidebar-nav {
@@ -213,11 +213,6 @@
 
         .logout-btn:hover {
             background: #dc2626;
-        }
-
-        .search-hit {
-            outline: 3px solid rgba(35, 127, 135, 0.28);
-            box-shadow: 0 0 0 6px rgba(35, 127, 135, 0.08), 0 14px 28px rgba(35, 127, 135, 0.14);
         }
 
         /* Overlay */
@@ -376,6 +371,73 @@
         .search-btn svg {
             width: 20px;
             height: 20px;
+        }
+
+        /* Modal overlay used by logout/settings/about */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: white;
+            border-radius: 12px;
+            max-width: 640px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(2,6,23,0.2);
+        }
+
+        .logout-modal {
+            max-width: 420px;
+            padding: 18px;
+        }
+
+        .logout-modal .modal-body {
+            color: #475467;
+        }
+
+        .logout-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .logout-cancel-btn,
+        .logout-confirm-btn {
+            border: 1px solid transparent;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .logout-cancel-btn {
+            background: #f8fafc;
+            color: #334155;
+            border-color: #dbe1ea;
+        }
+
+        .logout-cancel-btn:hover {
+            background: #eef2f7;
+        }
+
+        .logout-confirm-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #ffffff;
+            box-shadow: 0 8px 18px rgba(220, 38, 38, 0.25);
+        }
+
+        .logout-confirm-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 22px rgba(220, 38, 38, 0.3);
         }
 
         /* Section Headers */
@@ -705,11 +767,6 @@
 
         .destination-card:hover img {
             transform: scale(1.1);
-        }
-
-        .destination-card.search-hit,
-        .card.search-hit {
-            outline-offset: 2px;
         }
 
         .destination-overlay {

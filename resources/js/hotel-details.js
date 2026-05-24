@@ -64,19 +64,6 @@
     };
 
     /**
-     * Handle back navigation
-     */
-    function handleBackNavigation() {
-        const backBtn = document.querySelector('.back-btn');
-        if (backBtn) {
-            backBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                window.history.back();
-            });
-        }
-    }
-
-    /**
      * Log hotel details for debugging
      */
     function logHotelDetails() {
@@ -93,12 +80,10 @@
     // Initialize on DOM ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
-            handleBackNavigation();
             logHotelDetails();
             initHotelDetails();
         });
     } else {
-        handleBackNavigation();
         logHotelDetails();
         initHotelDetails();
     }

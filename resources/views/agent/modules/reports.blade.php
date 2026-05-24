@@ -24,7 +24,7 @@
         <div class="panel-header">
             <div>
                 <h2 class="panel-title">Reports</h2>
-                <div class="panel-subtitle">Read-only reporting summary for the agent workspace.</div>
+
             </div>
         </div>
 

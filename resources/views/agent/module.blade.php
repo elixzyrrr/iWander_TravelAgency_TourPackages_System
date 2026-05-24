@@ -9,7 +9,7 @@
         <div class="panel-header">
             <div>
                 <h2 class="panel-title">{{ $page['title'] }}</h2>
-                <div class="panel-subtitle">Create, update, and remove.</div>
+
             </div>
         </div>
 
@@ -102,7 +102,7 @@
             <div class="panel-header">
                 <div>
                     <h3 class="panel-title">{{ $page['title'] }} Records</h3>
-                    <div class="panel-subtitle">All records are stored in the database and can be edited or deleted.</div>
+
                 </div>
             </div>
         </div>
@@ -178,7 +178,7 @@
             <div class="panel-header">
                 <div>
                     <h3 class="panel-title">Agent Settings</h3>
-                    <div class="panel-subtitle">Update the agent-specific settings stored in the database.</div>
+
                 </div>
             </div>
 

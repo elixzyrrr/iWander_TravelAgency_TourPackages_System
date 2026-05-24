@@ -11,9 +11,9 @@
     <!-- Top Bar -->
     <div class="top-bar">
         <div class="logo-section">
-            <svg viewBox="0 0 61 47" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M30.5 0L61 47H0L30.5 0Z" fill="#237f87"/>
-                <path d="M30.5 10L50 40H11L30.5 10Z" fill="#1a6269"/>
+            <svg viewBox="0 0 61 47" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="color: #237f87;">
+                <path d="M6 24L55 6L33 41L28 27L6 24Z" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M28 27L55 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <span class="logo-text">iWander</span>
         </div>

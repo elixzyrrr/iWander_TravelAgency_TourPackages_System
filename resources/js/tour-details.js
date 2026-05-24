@@ -96,19 +96,6 @@
     };
 
     /**
-     * Handle back navigation
-     */
-    function handleBackNavigation() {
-        const backBtn = document.querySelector('.back-btn');
-        if (backBtn) {
-            backBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                window.history.back();
-            });
-        }
-    }
-
-    /**
      * Log tour details for debugging
      */
     function logTourDetails() {
@@ -125,12 +112,10 @@
     // Initialize on DOM ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
-            handleBackNavigation();
             logTourDetails();
             initTourDetails();
         });
     } else {
-        handleBackNavigation();
         logTourDetails();
         initTourDetails();
     }

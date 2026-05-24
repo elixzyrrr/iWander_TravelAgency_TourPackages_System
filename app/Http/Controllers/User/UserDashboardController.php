@@ -11,6 +11,7 @@ use App\Models\AirlineOption;
 use App\Models\HotelRoomOption;
 use App\Models\TourDateOption;
 use Closure;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -106,7 +107,7 @@ class UserDashboardController extends Controller implements HasMiddleware
         return response($html);
     }
 
-    public function storeBooking(Request $request): RedirectResponse
+    public function storeBooking(Request $request): RedirectResponse|JsonResponse
     {
         $validated = $request->validate([
             'booking_type' => ['required', 'in:flights,stays,tours'],
@@ -238,6 +239,8 @@ class UserDashboardController extends Controller implements HasMiddleware
                         'imageUrl' => $agentRecord->cover_image ?? null,
                         'price' => $agentRecord->amount ?? null,
                         'currency' => 'PHP',
+                        'startDate' => $agentRecord->travel_start?->toDateString(),
+                        'endDate' => $agentRecord->travel_end?->toDateString(),
                         'meta' => [
                             'agent_id' => $agentRecord->created_by,
                             'agent_module' => $agentRecord->module,
@@ -380,6 +383,8 @@ class UserDashboardController extends Controller implements HasMiddleware
             'user' => $user,
             'flight' => $flight,
             'airlines' => $airlines,
+            'flightStartDate' => $flight->travel_start?->format('Y-m-d'),
+            'flightEndDate' => $flight->travel_end?->format('Y-m-d'),
         ];
         
         return response(view('user.airlines.airlines-selection', $data)->render());

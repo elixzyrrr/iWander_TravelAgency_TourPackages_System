@@ -49,7 +49,7 @@
                 <div class="admin-card-header">
                     <div>
                         <h2 class="admin-card-title">Module Map</h2>
-                        <p class="admin-card-copy">Each module is now routed separately and backed by the database.</p>
+
                     </div>
                 </div>
                 <div class="admin-metric-list">
@@ -82,7 +82,6 @@
                 <div class="admin-card-header">
                     <div>
                         <h2 class="admin-card-title">System Snapshot</h2>
-                        <p class="admin-card-copy">Loaded from admin settings and user tables.</p>
                     </div>
                 </div>
                 <div class="admin-metric-list">
@@ -97,7 +96,7 @@
                 <div class="admin-card-header">
                     <div>
                         <h2 class="admin-card-title">Recent Users</h2>
-                        <p class="admin-card-copy">Latest accounts pulled from the users table.</p>
+
                     </div>
                 </div>
                 <div class="admin-table-wrap">

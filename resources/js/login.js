@@ -20,4 +20,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Make togglePassword available globally
     window.togglePassword = togglePassword;
 
+    // Login uses native form submit to preserve Laravel redirects and validation session state.
+
 });

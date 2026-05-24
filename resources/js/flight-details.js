@@ -41,6 +41,8 @@
             description: agentRecordData.description || agentRecordData.destination || '',
             price: agentRecordData.amount || 0,
             destination: agentRecordData.destination || 'Destination',
+            startDate: agentRecordData.travelStart || null,
+            endDate: agentRecordData.travelEnd || null,
             bookingType: 'flights',
         };
 
@@ -50,19 +52,6 @@
         // Redirect to airlines selection page
         window.location.href = `/flights/airlines/${agentRecordId}`;
     };
-
-    /**
-     * Handle back navigation
-     */
-    function handleBackNavigation() {
-        const backBtn = document.querySelector('.back-btn');
-        if (backBtn) {
-            backBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                window.history.back();
-            });
-        }
-    }
 
     /**
      * Log flight details for debugging
@@ -81,12 +70,10 @@
     // Initialize on DOM ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
-            handleBackNavigation();
             logFlightDetails();
             initFlightDetails();
         });
     } else {
-        handleBackNavigation();
         logFlightDetails();
         initFlightDetails();
     }

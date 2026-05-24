@@ -187,17 +187,18 @@
 
     function renderCardGrid(gridId, items, sectionKey) {
         const grid = document.getElementById(gridId);
+        const routeableItems = (items || []).filter((item) => item.sourceType === 'agent');
 
         if (! grid) {
             return;
         }
 
-        if (! items.length) {
+        if (! routeableItems.length) {
             grid.innerHTML = '<div class="card" style="padding:24px;grid-column:1/-1;cursor:default;">No records found.</div>';
             return;
         }
 
-        grid.innerHTML = items.map((item) => {
+        grid.innerHTML = routeableItems.map((item) => {
             const title = escapeHtml(item.title ?? 'Untitled');
             const description = escapeHtml(item.description ?? '');
             const price = item.price !== null && item.price !== undefined ? formatCurrency(item.price, item.currency || 'PHP') : '';
@@ -213,9 +214,11 @@
             const searchText = [title, description, price, metaText, creatorLabel].join(' ');
             const itemId = escapeHtml(item.sourceId ?? item.id ?? '');
             const itemSource = escapeHtml(item.sourceType || 'dashboard');
+                const startDate = escapeHtml(item.startDate ?? item.meta?.start_date ?? '');
+                const endDate = escapeHtml(item.endDate ?? item.meta?.end_date ?? '');
 
             return `
-                <article class="card" data-item-id="${itemId}" data-item-source="${itemSource}" data-search-text="${escapeHtml(searchText)}">
+                    <article class="card" data-item-id="${itemId}" data-item-source="${itemSource}" data-item-start-date="${startDate}" data-item-end-date="${endDate}" data-search-text="${escapeHtml(searchText)}">
                     <div class="card-image">
                         <img src="${escapeHtml(imageUrl)}" alt="${title}">
                         ${item.isFeatured ? '<div class="card-badge"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg><span>Featured</span></div>' : ''}
@@ -353,6 +356,17 @@
     }
 
     function logout() {
+        const existingLogoutForm = document.querySelector('form[action$="/logout"]');
+
+        if (existingLogoutForm) {
+            if (typeof window.openLogoutModal === 'function') {
+                window.openLogoutModal(existingLogoutForm);
+            } else {
+                existingLogoutForm.submit();
+            }
+            return;
+        }
+
         if (! csrfToken) {
             return;
         }
@@ -465,59 +479,25 @@
 
     renderDestinationGrid();
 
-    // Wire card clicks to detail pages or booking process (after cards are rendered)
+    // Wire card clicks to detail pages (after cards are rendered)
     document.querySelectorAll('.card').forEach((card) => {
         card.addEventListener('click', () => {
-            const title = card.querySelector('.card-title')?.textContent?.trim();
-            const description = card.querySelector('.card-subtitle')?.textContent?.trim();
-            const priceEl = card.querySelector('.card-price');
-            const price = priceEl ? parseFloat(priceEl.textContent.replace(/[^\d.]/g, '')) || 0 : 0;
             const grid = card.parentElement;
             const sectionKey = grid?.id === 'flightsGrid' ? 'flights' : (grid?.id === 'hotelsGrid' ? 'stays' : 'tours');
             const sourceType = card.dataset.itemSource || 'dashboard';
             const sourceId = card.dataset.itemId || '';
-            
-            // Debug logging
-            console.log('Card clicked:', { title, sourceType, sourceId, sectionKey });
-            
-            // If this is an agent-created record, navigate to detail page first
-            if (sourceType === 'agent') {
-                const typeMap = {
-                    flights: 'flights',
-                    stays: 'hotels',
-                    tours: 'tours',
-                };
-                const detailType = typeMap[sectionKey] || sectionKey;
-                
-                // Navigate to detail page
-                console.log('Routing to detail page:', `/flights/details/${sourceId}`.replace('flights', detailType));
-                window.location.href = `/flights/details/${sourceId}`.replace('flights', detailType);
+
+            if (sourceType !== 'agent' || !sourceId) {
                 return;
             }
-            
-            // For dashboard items, proceed directly to booking
-            const bookingItem = {
-                id: sourceId,
-                itemId: sourceType === 'dashboard' ? sourceId : '',
-                agentRecordId: sourceType === 'agent' ? sourceId : '',
-                sourceType,
-                sourceId,
-                title: title || 'Selected Item',
-                description: description || '',
-                price: price,
-                origin: sectionKey === 'flights' ? 'Departure' : 'Location',
-                destination: description || 'Destination',
-                flag: sectionKey === 'flights' ? '✈️' : (sectionKey === 'stays' ? '🏨' : '🗺️'),
-                bookingType: sectionKey,
+
+            const typeMap = {
+                flights: 'flights',
+                stays: 'hotels',
+                tours: 'tours',
             };
-            
-            // Store to localStorage
-            localStorage.setItem('selectedBookingItem', JSON.stringify(bookingItem));
-            
-            // Redirect to booking form
-            const bookingUrl = new URL('/bookings/steps/booking', window.location.origin);
-            bookingUrl.searchParams.set('type', sectionKey);
-            window.location.href = bookingUrl.toString();
+            const detailType = typeMap[sectionKey] || sectionKey;
+            window.location.href = `/flights/details/${sourceId}`.replace('flights', detailType);
         });
     });
 

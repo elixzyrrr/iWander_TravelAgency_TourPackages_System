@@ -20,14 +20,20 @@
             <div class="left-overlay"></div>
             
             <div class="left-content">
-                <svg class="left-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <svg class="left-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M3 12L21 3L13 21L10 13L3 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 13L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 
                 <h1 class="left-title">iWander</h1>
                 
                 <p class="left-tagline">Explore The World With Luxury</p>
+                
+                <div class="left-footer">
+                    <p class="left-footer-title">adventure & wanderlust</p>
+                    <p class="left-footer-text">Contact: +1 (555) 123-4567</p>
+                    <p class="left-footer-text">www.iwander.com</p>
+                </div>
             </div>
         </div>
 
@@ -36,43 +42,55 @@
             <div class="form-container">
                 <!-- Mobile Logo -->
                 <div class="mobile-logo">
-                    <svg class="logo-img" viewBox="0 0 61 47" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M30.5 0L61 47H0L30.5 0Z" fill="white" opacity="0.9"/>
-                    <path d="M30.5 10L50 40H11L30.5 10Z" fill="#237f87"/>
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M3 12L21 3L13 21L10 13L3 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10 13L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     <span class="mobile-logo-text">iWander</span>
                 </div>
 
+                <!-- Form Header -->
                 <div class="form-header">
                     <h2 class="form-title">Login Here!</h2>
                 </div>
 
+                <!-- Error Message -->
+                @if ($errors->any())
+                    <div id="errorMessage" class="error-message">
+                        {{ $errors->first() }}
+                    </div>
+                @else
+                    <div id="errorMessage" class="error-message" style="display: none;"></div>
+                @endif
+
+                <!-- Login Form -->
                 <form class="form" id="loginForm" method="POST" action="{{ route('login.store') }}">
                     @csrf
-
-                    @if ($errors->any())
-                        <div style="margin-bottom: 8px; color: #dc2626; font-size: 14px;">
-                            {{ $errors->first() }}
-                        </div>
-                    @endif
-
-                    <div class="input-group">
+                    <!-- Email Field -->
+                    @error('email')
+                        <div class="field-error field-error-top" aria-live="polite">{{ $message }}</div>
+                    @enderror
+                    <div class="input-group {{ $errors->has('email') ? 'has-error' : '' }}">
                         <div class="input-icon">
                             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
                         </div>
                         <input
                             id="email"
-                            name="email"
                             type="email"
-                            placeholder="email"
+                            name="email"
+                            placeholder="email address"
+                            value="{{ old('email') }}"
                             required
-                            autocomplete="email"
                         />
                     </div>
 
-                    <div class="input-group">
+                    <!-- Password Field -->
+                    @error('password')
+                        <div class="field-error field-error-top" aria-live="polite">{{ $message }}</div>
+                    @enderror
+                    <div class="input-group {{ $errors->has('password') ? 'has-error' : '' }}">
                         <div class="input-icon">
                             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -80,11 +98,10 @@
                         </div>
                         <input
                             id="password"
-                            name="password"
                             type="password"
+                            name="password"
                             placeholder="password"
                             required
-                            autocomplete="current-password"
                         />
                         <button type="button" class="toggle-password" onclick="togglePassword()">
                             <svg id="eyeIconClosed" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -97,10 +114,11 @@
                         </button>
                     </div>
 
+                    <!-- Remember Password -->
                     <div class="checkbox-group">
                         <input
-                            name="remember"
                             id="remember"
+                            name="remember"
                             type="checkbox"
                             value="1"
                         />
@@ -109,14 +127,25 @@
                         </label>
                     </div>
 
+                    <!-- Login Button -->
                     <button type="submit" class="btn-submit">
                         <span>LOGIN</span>
                         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
                     </button>
+                    <!-- Cancel Button -->
+                    <a href="{{ route('landing') }}" class="btn-cancel">
+                        <span>CANCEL</span>
+                    </a>
                 </form>
 
+                <!-- Divider -->
+                <div class="divider">
+                    <span class="divider-text">or</span>
+                </div>
+
+                <!-- Sign Up Link -->
                 <div class="signup-link">
                     <p class="signup-link-text">
                         Don't have an account? <a href="{{ route('signup') }}">Sign Up</a>

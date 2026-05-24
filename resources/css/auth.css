@@ -138,6 +138,18 @@ a {
     color: #fecaca;
 }
 
+.auth-error-list {
+    margin: 10px 0 0;
+    padding-left: 18px;
+    display: grid;
+    gap: 6px;
+    color: #fecaca;
+}
+
+.auth-error-list li {
+    line-height: 1.45;
+}
+
 .auth-form {
     display: grid;
     gap: 16px;
@@ -187,6 +199,26 @@ a {
     color: #041018;
     font-weight: 800;
     cursor: pointer;
+}
+
+.auth-button-cancel {
+    display: inline-block;
+    margin-top: 6px;
+    border: 1px solid var(--auth-card-border);
+    border-radius: 14px;
+    padding: 14px 18px;
+    background: transparent;
+    color: var(--auth-muted);
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.auth-button-cancel:hover {
+    border-color: var(--auth-accent);
+    color: var(--auth-accent);
 }
 
 .auth-footer-text {

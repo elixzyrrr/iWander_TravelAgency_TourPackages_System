@@ -12,9 +12,9 @@
         <div class="left-panel">
             <div class="form-container">
                 <div class="mobile-logo">
-                    <svg class="logo-img" viewBox="0 0 61 47" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M30.5 0L61 47H0L30.5 0Z" fill="white" opacity="0.9"/>
-                        <path d="M30.5 10L50 40H11L30.5 10Z" fill="#237f87"/>
+                    <svg class="logo-img" viewBox="0 0 61 47" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M6 24L55 6L33 41L28 27L6 24Z" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M28 27L55 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     <span class="mobile-logo-text">iWander</span>
                 </div>
@@ -27,12 +27,15 @@
                     @csrf
 
                     @if ($errors->any())
-                        <div style="margin-bottom: 8px; color: #dc2626; font-size: 14px;">
+                        <div class="error-message" style="margin-bottom: 8px;">
                             {{ $errors->first() }}
                         </div>
                     @endif
 
-                    <div class="input-group">
+                    @error('name')
+                        <div class="field-error field-error-top" aria-live="polite">{{ $message }}</div>
+                    @enderror
+                    <div class="input-group {{ $errors->has('name') ? 'has-error' : '' }}">
                         <div class="input-icon">
                             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -43,12 +46,16 @@
                             name="name"
                             type="text"
                             placeholder="full name"
+                            value="{{ old('name') }}"
                             required
                             autocomplete="name"
                         />
                     </div>
 
-                    <div class="input-group">
+                    @error('email')
+                        <div class="field-error field-error-top" aria-live="polite">{{ $message }}</div>
+                    @enderror
+                    <div class="input-group {{ $errors->has('email') ? 'has-error' : '' }}">
                         <div class="input-icon">
                             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -59,12 +66,16 @@
                             name="email"
                             type="email"
                             placeholder="email address"
+                            value="{{ old('email') }}"
                             required
                             autocomplete="email"
                         />
                     </div>
 
-                    <div class="input-group">
+                    @error('password')
+                        <div class="field-error field-error-top" aria-live="polite">{{ $message }}</div>
+                    @enderror
+                    <div class="input-group {{ $errors->has('password') ? 'has-error' : '' }}">
                         <div class="input-icon">
                             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -89,7 +100,10 @@
                         </button>
                     </div>
 
-                    <div class="input-group">
+                    @error('password_confirmation')
+                        <div class="field-error field-error-top" aria-live="polite">{{ $message }}</div>
+                    @enderror
+                    <div class="input-group {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
                         <div class="input-icon">
                             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -120,6 +134,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
                     </button>
+
+                    <a href="{{ route('landing') }}" class="btn-cancel">CANCEL</a>
                 </form>
 
                 <div class="login-link">
@@ -140,9 +156,9 @@
             <div class="right-overlay"></div>
 
             <div class="right-content">
-                <svg class="right-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <svg class="right-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M3 12L21 3L13 21L10 13L3 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 13L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
 
                 <h1 class="right-title">iWander</h1>

@@ -11,8 +11,13 @@
     </div>
 
     @if ($errors->any())
-        <div class="auth-alert auth-alert-error">
-            {{ $errors->first() }}
+        <div class="auth-alert auth-alert-error" role="alert" aria-live="polite">
+            <strong>Please fix the following:</strong>
+            <ul class="auth-error-list">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
     @endif
 
@@ -40,6 +45,7 @@
         </label>
 
         <button type="submit" class="auth-button">Create account</button>
+        <a href="{{ route('landing') }}" class="auth-button-cancel">Cancel</a>
     </form>
 
     <p class="auth-footer-text">

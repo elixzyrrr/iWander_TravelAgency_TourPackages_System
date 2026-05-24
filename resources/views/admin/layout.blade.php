@@ -8,15 +8,108 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Gwendolyn:wght@700&display=swap" rel="stylesheet">
     @vite(['resources/css/admin.css', 'resources/js/app.js'])
+    <style>
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            background: rgba(2, 6, 23, 0.55);
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            width: 100%;
+            max-width: 640px;
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 24px 60px rgba(2, 6, 23, 0.28);
+        }
+
+        .modal-header,
+        .modal-body,
+        .modal-footer {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .modal-header {
+            padding-top: 20px;
+            padding-bottom: 12px;
+        }
+
+        .modal-body {
+            padding-top: 8px;
+            padding-bottom: 10px;
+        }
+
+        .modal-footer {
+            padding-top: 12px;
+            padding-bottom: 20px;
+        }
+
+        .logout-modal {
+            max-width: 420px;
+            padding: 18px;
+        }
+
+        .logout-modal .modal-body {
+            color: #475467;
+        }
+
+        .logout-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .logout-cancel-btn,
+        .logout-confirm-btn {
+            border: 1px solid transparent;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .logout-cancel-btn {
+            background: #f8fafc;
+            color: #334155;
+            border-color: #dbe1ea;
+        }
+
+        .logout-cancel-btn:hover {
+            background: #eef2f7;
+        }
+
+        .logout-confirm-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #ffffff;
+            box-shadow: 0 8px 18px rgba(220, 38, 38, 0.25);
+        }
+
+        .logout-confirm-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 22px rgba(220, 38, 38, 0.3);
+        }
+    </style>
 </head>
 <body>
     <div class="admin-shell">
         <aside class="admin-sidebar">
             <div class="admin-brand">
                 <div class="admin-brand-mark">
-                    <svg viewBox="0 0 61 47" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path d="M30.5 0L61 47H0L30.5 0Z" fill="#237f87" />
-                        <path d="M30.5 10L50 40H11L30.5 10Z" fill="#1a6269" />
+                    <svg viewBox="0 0 61 47" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="color: var(--admin-primary);">
+                        <path d="M6 24L55 6L33 41L28 27L6 24Z" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M28 27L55 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     <div>
                         <div class="admin-brand-name">iWander</div>
@@ -89,7 +182,6 @@
                     <div class="admin-topbar-subtitle">@yield('page_subtitle', 'Operational control center for the admin modules')</div>
                 </div>
                 <div class="admin-toolbar">
-                    <span class="admin-pill">Connected to database</span>
                     <span class="admin-pill">{{ now()->format('M d, Y') }}</span>
                 </div>
             </header>
@@ -109,5 +201,110 @@
             </section>
         </main>
     </div>
+
+    <!-- Logout confirmation modal -->
+    <div id="logout-modal" class="modal-overlay" style="display:none; align-items:center; justify-content:center;">
+        <div class="modal logout-modal">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title">Confirm Logout</h3>
+                </div>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to logout from this session?
+            </div>
+            <div class="modal-footer logout-actions">
+                <button type="button" class="logout-cancel-btn" onclick="closeLogoutModal()">Cancel</button>
+                <button type="button" class="logout-confirm-btn" id="confirm-logout-btn">Logout</button>
+            </div>
+        </div>
+    </div>
+    <!-- Settings modal -->
+    <div id="settings-modal" class="modal-overlay" style="display:none; align-items:center; justify-content:center;">
+        <div class="modal" style="max-width:520px; padding:18px;">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title">Settings</h3>
+                </div>
+                <button type="button" class="modal-close" onclick="document.getElementById('settings-modal').classList.remove('active')">Close</button>
+            </div>
+            <div class="modal-body">Settings content goes here.</div>
+            <div class="modal-footer" style="display:flex; gap:8px; justify-content:flex-end;">
+                <button type="button" class="btn-secondary" onclick="document.getElementById('settings-modal').classList.remove('active')">Close</button>
+                <button type="button" class="btn-primary" onclick="alert('Save settings - implement later');">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- About modal -->
+    <div id="about-modal" class="modal-overlay" style="display:none; align-items:center; justify-content:center;">
+        <div class="modal" style="max-width:520px; padding:18px;">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title">About</h3>
+                </div>
+                <button type="button" class="modal-close" onclick="document.getElementById('about-modal').classList.remove('active')">Close</button>
+            </div>
+            <div class="modal-body">iWander admin panel — version info and credits.</div>
+            <div class="modal-footer" style="display:flex; gap:8px; justify-content:flex-end;">
+                <button type="button" class="btn-secondary" onclick="document.getElementById('about-modal').classList.remove('active')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            function bindAdminLogout() {
+                const modal = document.getElementById('logout-modal');
+                const confirmBtn = document.getElementById('confirm-logout-btn');
+                const form = document.querySelector('form[action="{{ route('logout') }}"]');
+
+                if (!modal || !confirmBtn || !form || form.dataset.adminLogoutBound === '1') {
+                    return;
+                }
+
+                form.dataset.adminLogoutBound = '1';
+
+                function openLogoutModal() {
+                    modal.style.display = 'flex';
+                    modal.classList.add('active');
+                }
+
+                function closeLogoutModal() {
+                    modal.style.display = 'none';
+                    modal.classList.remove('active');
+                }
+
+                window.closeLogoutModal = closeLogoutModal;
+
+                form.addEventListener('submit', function (event) {
+                    if (form.dataset.logoutConfirmed === '1') {
+                        return;
+                    }
+
+                    event.preventDefault();
+                    openLogoutModal();
+                });
+
+                confirmBtn.addEventListener('click', function () {
+                    form.dataset.logoutConfirmed = '1';
+                    closeLogoutModal();
+                    form.submit();
+                });
+
+                modal.addEventListener('click', function (event) {
+                    if (event.target === modal) {
+                        closeLogoutModal();
+                    }
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', bindAdminLogout);
+            } else {
+                bindAdminLogout();
+            }
+        })();
+    </script>
 </body>
 </html>

@@ -53,7 +53,7 @@
                 <div class="panel-header">
                     <div>
                         <h3 class="panel-title">Recent Bookings</h3>
-                        <div class="panel-subtitle">Latest booking records</div>
+
                     </div>
                     <a class="btn btn-view" href="{{ route('agent.module', ['module' => 'bookings']) }}">View All</a>
                 </div>

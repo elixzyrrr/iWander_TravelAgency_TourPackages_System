@@ -104,6 +104,8 @@
             price: airlineSelectionData.flightAmount || 0,
             origin: 'Departure',
             destination: airlineSelectionData.flightDestination || 'Destination',
+            startDate: airlineSelectionData.flightStartDate || null,
+            endDate: airlineSelectionData.flightEndDate || null,
             airline: airlineName,
             airlineId: airlineId,
             departure: flightData.departure,

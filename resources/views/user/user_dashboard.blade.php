@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - iWander</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    @vite('resources/css/user_dashboard.css')
+    @vite(['resources/css/user_dashboard.css', 'resources/js/app.js'])
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo-section">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="color: #237f87;">
+                    <path d="M3 12L21 3L13 21L10 13L3 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 13L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <span class="logo-text">iWander</span>
             </div>
@@ -286,5 +286,115 @@
             </div>
         </section>
     </main>
+
+    <!-- Logout confirmation modal -->
+    <div id="logout-modal" class="modal-overlay" style="display:none; align-items:center; justify-content:center;">
+        <div class="modal logout-modal">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title">Confirm Logout</h3>
+                </div>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to logout?
+            </div>
+            <div class="modal-footer logout-actions">
+                <button type="button" class="logout-cancel-btn" onclick="closeLogoutModal()">Cancel</button>
+                <button type="button" class="logout-confirm-btn" id="confirm-logout-btn">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings modal -->
+    <div id="settings-modal" class="modal-overlay" style="display:none; align-items:center; justify-content:center;">
+        <div class="modal" style="max-width:520px; padding:18px;">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title">Settings</h3>
+                </div>
+                <button type="button" class="modal-close" onclick="document.getElementById('settings-modal').classList.remove('active')">Close</button>
+            </div>
+            <div class="modal-body">User settings placeholder.</div>
+            <div class="modal-footer" style="display:flex; gap:8px; justify-content:flex-end;">
+                <button type="button" class="btn-secondary" onclick="document.getElementById('settings-modal').classList.remove('active')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- About modal -->
+    <div id="about-modal" class="modal-overlay" style="display:none; align-items:center; justify-content:center;">
+        <div class="modal" style="max-width:520px; padding:18px;">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title">About</h3>
+                </div>
+                <button type="button" class="modal-close" onclick="document.getElementById('about-modal').classList.remove('active')">Close</button>
+            </div>
+            <div class="modal-body">About the iWander app.</div>
+            <div class="modal-footer" style="display:flex; gap:8px; justify-content:flex-end;">
+                <button type="button" class="btn-secondary" onclick="document.getElementById('about-modal').classList.remove('active')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            function bindLayoutLogout() {
+                const modal = document.getElementById('logout-modal');
+                const confirmBtn = document.getElementById('confirm-logout-btn');
+                const form = document.querySelector('form[action="{{ route('logout') }}"]');
+
+                if (!modal || !confirmBtn || !form || form.dataset.layoutLogoutBound === '1') {
+                    return;
+                }
+
+                form.dataset.layoutLogoutBound = '1';
+
+                function openLogoutModal() {
+                    modal.style.display = 'flex';
+                    modal.classList.add('active');
+                }
+
+                function closeLogoutModal() {
+                    modal.style.display = 'none';
+                    modal.classList.remove('active');
+                }
+
+                window.openLogoutModal = function (submitForm) {
+                    if (submitForm === form || !submitForm) {
+                        openLogoutModal();
+                    }
+                };
+                window.closeLogoutModal = closeLogoutModal;
+
+                form.addEventListener('submit', function (event) {
+                    if (form.dataset.logoutConfirmed === '1') {
+                        return;
+                    }
+
+                    event.preventDefault();
+                    openLogoutModal();
+                });
+
+                confirmBtn.addEventListener('click', function () {
+                    form.dataset.logoutConfirmed = '1';
+                    closeLogoutModal();
+                    form.submit();
+                });
+
+                modal.addEventListener('click', function (event) {
+                    if (event.target === modal) {
+                        closeLogoutModal();
+                    }
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', bindLayoutLogout);
+            } else {
+                bindLayoutLogout();
+            }
+        })();
+    </script>
 </body>
 </html>

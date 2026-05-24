@@ -53,13 +53,82 @@
         </div>
     </div>
 
+    <div class="grid-2" style="margin-top: 18px;">
+        <div class="table-container">
+            <div class="table-header">
+                <div class="panel-header">
+                    <div>
+                        <h3 class="panel-title">Recent Flights</h3>
+                    </div>
+                    <a class="btn btn-view" href="{{ route('agent.module', ['module' => 'flights']) }}">View All</a>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Destination</th>
+                            <th>Status</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($recentFlights as $record)
+                            <tr>
+                                <td>{{ $record->title }}</td>
+                                <td>{{ $record->destination ?? 'N/A' }}</td>
+                                <td><span class="status-badge status-{{ $record->status }}">{{ ucfirst(str_replace('_', ' ', $record->status)) }}</span></td>
+                                <td>₱{{ number_format((float) ($record->amount ?? 0), 2) }}</td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="4">No flight records yet.</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <div class="panel-header">
+                    <div>
+                        <h3 class="panel-title">Recent Hotels & Packages</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Module</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse (collect($recentHotels)->concat($recentPackages)->take(6) as $record)
+                            <tr>
+                                <td>{{ $record->title }}</td>
+                                <td>{{ ucfirst($record->module) }}</td>
+                                <td><span class="status-badge status-{{ $record->status }}">{{ ucfirst(str_replace('_', ' ', $record->status)) }}</span></td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="3">No hotel or package records yet.</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <div class="grid-2">
         <div class="table-container">
             <div class="table-header">
                 <div class="panel-header">
                     <div>
                         <h3 class="panel-title">Recent Bookings</h3>
-                        <div class="panel-subtitle">Latest booking records from the database</div>
+
                     </div>
                     <a class="btn btn-view" href="{{ route('agent.module', ['module' => 'bookings']) }}">View All</a>
                 </div>
@@ -69,7 +138,7 @@
                     <thead>
                         <tr>
                             <th>Ref</th>
-                            <th>Title</th>
+                            <th>Customer</th>
                             <th>Destination</th>
                             <th>Status</th>
                             <th>Amount</th>
@@ -79,8 +148,8 @@
                         @forelse ($recentBookings as $record)
                             <tr>
                                 <td>{{ $record->reference_code ?? 'N/A' }}</td>
-                                <td>{{ $record->title }}</td>
-                                <td>{{ $record->destination ?? 'N/A' }}</td>
+                                <td>{{ $record->user?->name ?? 'Unknown customer' }}</td>
+                                <td>{{ $record->destination ?? $record->origin ?? 'N/A' }}</td>
                                 <td><span class="status-badge status-{{ $record->status }}">{{ ucfirst(str_replace('_', ' ', $record->status)) }}</span></td>
                                 <td>₱{{ number_format((float) ($record->amount ?? 0), 2) }}</td>
                             </tr>

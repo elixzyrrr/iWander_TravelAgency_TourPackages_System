@@ -24,7 +24,7 @@
         <div class="admin-card-header">
             <div>
                 <h2 class="admin-card-title">Commission Overview</h2>
-                <p class="admin-card-copy">Values are computed from the users table.</p>
+
             </div>
         </div>
 

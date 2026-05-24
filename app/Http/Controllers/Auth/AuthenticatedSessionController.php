@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,13 +24,27 @@ class AuthenticatedSessionController extends Controller
             'password' => ['required', 'string'],
         ]);
 
+        $user = User::query()->where('email', $credentials['email'])->first();
+
+        if (! $user) {
+            throw ValidationException::withMessages([
+                'email' => 'We could not find an account with that email address.',
+            ]);
+        }
+
+        if ($user->status !== 'active') {
+            throw ValidationException::withMessages([
+                'email' => 'This account is not active yet. Please contact support.',
+            ]);
+        }
+
         if (! Auth::attempt([
             'email' => $credentials['email'],
             'password' => $credentials['password'],
             'status' => 'active',
         ], $request->boolean('remember'))) {
             throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
+                'password' => 'The password you entered is incorrect.',
             ]);
         }
 

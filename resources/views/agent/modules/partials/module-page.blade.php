@@ -2,10 +2,47 @@
     $moduleKey = $moduleKey ?? ($page['module'] ?? '');
     $canCrud = ($page['canCrud'] ?? false) && ($storageReady ?? true);
     $modalId = 'agent-module-modal-'.$moduleKey;
+    $isBookingModule = $moduleKey === 'bookings';
     $showCoverUpload = in_array($moduleKey, ['flights', 'hotels', 'packages'], true);
     $isPackageModule = $moduleKey === 'packages';
     $isFlightModule = $moduleKey === 'flights';
     $isHotelModule = $moduleKey === 'hotels';
+
+    $airlineOptionsDefault = json_encode([
+        [
+            'airline_name' => 'Philippine Airlines',
+            'airline_code' => 'PR',
+            'icon' => '🇵🇭',
+            'sort_order' => 1,
+            'flights' => [
+                ['departure' => '08:00', 'arrival' => '15:30', 'duration' => '7h 30m', 'stops' => 0, 'price' => 45000],
+                ['departure' => '14:00', 'arrival' => '21:30', 'duration' => '7h 30m', 'stops' => 1, 'price' => 42000],
+            ],
+        ],
+    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+    $airlineOptionsValue = old('airline_options_json');
+
+    if ($airlineOptionsValue === null && $isFlightModule && $editingRecord) {
+        $airlineOptionsValue = json_encode(
+            $editingRecord->airlineOptions
+                ->sortBy('sort_order')
+                ->map(fn($option) => [
+                    'airline_name' => $option->airline_name,
+                    'airline_code' => $option->airline_code,
+                    'icon' => $option->icon,
+                    'sort_order' => $option->sort_order,
+                    'flights' => $option->flights,
+                ])
+                ->values()
+                ->all(),
+            JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE
+        );
+    }
+
+    if ($airlineOptionsValue === null && $isFlightModule) {
+        $airlineOptionsValue = $airlineOptionsDefault;
+    }
 @endphp
 
 <div class="admin-alert error" style="margin-bottom: 24px; display: {{ ($storageReady ?? true) ? 'none' : 'block' }};">
@@ -16,25 +53,21 @@
     <div class="panel-header">
         <div>
             <h2 class="panel-title">{{ $page['title'] }}</h2>
-            <div class="panel-subtitle">
-                {{ $canCrud ? 'Use quick actions to add or update records in a modal.' : 'Browse records stored in the database.' }}
-            </div>
         </div>
 
-        @if ($canCrud)
+        @if ($canCrud && ! $isBookingModule)
             <button class="btn-primary" type="button" onclick="openModal('{{ $modalId }}')">
                 {{ $isPackageModule ? 'Create Package' : ($isFlightModule ? 'Add Flight' : ($isHotelModule ? 'Add Hotel' : 'Create Record')) }}
             </button>
         @endif
     </div>
 
-    @if ($canCrud)
+    @if ($canCrud && ! $isBookingModule)
         <div class="modal-overlay" id="{{ $modalId }}">
             <div class="modal">
                 <div class="modal-header">
                     <div>
                         <h3 class="modal-title">{{ $editingRecord ? 'Edit '.$page['title'] : $page['title'] }}</h3>
-                        <div class="panel-subtitle">{{ $editingRecord ? 'Update the saved record details.' : 'Fill out the form to save a new record.' }}</div>
                     </div>
                     <button class="modal-close" type="button" onclick="closeModal('{{ $modalId }}')">Close</button>
                 </div>
@@ -135,7 +168,7 @@
                                 <input class="form-input" type="text" name="contact_phone" value="{{ old('contact_phone', $editingRecord?->contact_phone) }}" placeholder="Optional contact phone">
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Details JSON / Notes</label>
+                                <label class="form-label">Details</label>
                                 <textarea class="form-textarea" name="details" placeholder='{"notes":"Optional structured data"}'>{{ old('details', $editingRecord?->details ? json_encode($editingRecord->details, JSON_PRETTY_PRINT) : '') }}</textarea>
                             </div>
                         </div>
@@ -145,9 +178,79 @@
                             <textarea class="form-textarea" name="description" placeholder="Additional notes">{{ old('description', $editingRecord?->description) }}</textarea>
                         </div>
 
+                        @if ($isFlightModule)
+                            <div class="form-group">
+                                <label class="form-label">Airline Options JSON (Visible to customers)</label>
+                                <textarea class="form-textarea" name="airline_options_json" rows="10" placeholder='[{
+  "airline_name":"Airline Name",
+  "airline_code":"PR",
+  "icon":"✈️",
+  "sort_order":1,
+  "flights":[{"departure":"08:00","arrival":"15:30","duration":"7h 30m","stops":0,"price":45000}]
+}]'>{{ $airlineOptionsValue }}</textarea>
+                                <small style="color:#6b7280; display:block; margin-top:6px;">Customers will see these options on the airline selection page. Format must be valid JSON array.</small>
+                            </div>
+                        @endif
+
                         <div class="modal-footer">
                             <button class="btn-secondary" type="button" onclick="closeModal('{{ $modalId }}')">Cancel</button>
                             <button class="btn-primary" type="submit">{{ $editingRecord ? 'Update Record' : 'Save Record' }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    @if ($isBookingModule && $editingRecord)
+        <div class="modal-overlay active" id="{{ $modalId }}">
+            <div class="modal">
+                <div class="modal-header">
+                    <div>
+                        <h3 class="modal-title">Edit Booking Status</h3>
+                    </div>
+                    <button class="modal-close" type="button" onclick="closeModal('{{ $modalId }}')">Close</button>
+                </div>
+
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('agent.bookings.update', $editingRecord) }}">
+                        @csrf
+                        @method('PATCH')
+
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label class="form-label">Reference Code</label>
+                                <input class="form-input" type="text" value="{{ $editingRecord->reference_code }}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Customer</label>
+                                <input class="form-input" type="text" value="{{ $editingRecord->user?->name ?? 'Unknown customer' }}" disabled>
+                            </div>
+                        </div>
+
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label class="form-label">Route</label>
+                                <input class="form-input" type="text" value="{{ $editingRecord->destination ? $editingRecord->origin.' → '.$editingRecord->destination : ($editingRecord->origin ?? 'N/A') }}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Current Status</label>
+                                <input class="form-input" type="text" value="{{ ucfirst($editingRecord->status) }}" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Update Status</label>
+                            <select class="form-select" name="status" required>
+                                @foreach (['pending', 'confirmed', 'cancelled'] as $status)
+                                    <option value="{{ $status }}" @selected($editingRecord->status === $status)>{{ ucfirst($status) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn-secondary" type="button" onclick="closeModal('{{ $modalId }}')">Cancel</button>
+                            <button class="btn-primary" type="submit">Save Changes</button>
                         </div>
                     </form>
                 </div>
@@ -161,7 +264,6 @@
         <div class="panel-header">
             <div>
                 <h3 class="panel-title">{{ $page['title'] }} List</h3>
-                <div class="panel-subtitle">Showing the saved records.</div>
             </div>
         </div>
     </div>
@@ -170,32 +272,64 @@
         <table>
             <thead>
                 <tr>
-                    @if ($showCoverUpload)
-                        <th>Cover</th>
-                    @endif
-                    <th>Title</th>
-                    @if ($isPackageModule)
-                        <th>Flight</th>
-                        <th>Hotel</th>
-                    @elseif ($isFlightModule)
+                    @if ($isBookingModule)
+                        <th>Ref</th>
+                        <th>Customer</th>
+                        <th>Email</th>
                         <th>Route</th>
-                        <th>Schedule</th>
-                    @elseif ($isHotelModule)
-                        <th>Location</th>
-                        <th>Schedule</th>
-                    @else
-                        <th>Contact</th>
-                        <th>Destination</th>
-                    @endif
-                    <th>Status</th>
-                    <th>Amount</th>
-                    @if ($canCrud)
+                        <th>Travel Dates</th>
+                        <th>Status</th>
+                        <th>Amount</th>
                         <th>Actions</th>
+                    @else
+                        @if ($showCoverUpload)
+                        <th>Cover</th>
+                        @endif
+                        <th>Title</th>
+                        @if ($isPackageModule)
+                            <th>Flight</th>
+                            <th>Hotel</th>
+                        @elseif ($isFlightModule)
+                            <th>Route</th>
+                            <th>Schedule</th>
+                        @elseif ($isHotelModule)
+                            <th>Location</th>
+                            <th>Schedule</th>
+                        @else
+                            <th>Contact</th>
+                            <th>Destination</th>
+                        @endif
+                        <th>Status</th>
+                        <th>Amount</th>
+                        @if ($canCrud)
+                            <th>Actions</th>
+                        @endif
                     @endif
                 </tr>
             </thead>
             <tbody>
                 @forelse ($records as $record)
+                    @if ($isBookingModule)
+                        <tr>
+                            <td>{{ $record->reference_code ?? 'N/A' }}</td>
+                            <td>{{ $record->user?->name ?? 'Unknown customer' }}</td>
+                            <td>{{ $record->user?->email ?? 'N/A' }}</td>
+                            <td>{{ $record->destination ? $record->origin.' → '.$record->destination : ($record->origin ?? 'N/A') }}</td>
+                            <td>
+                                {{ optional($record->start_date)->format('M d, Y') ?? 'N/A' }}
+                                @if ($record->end_date)
+                                    <span style="color:#6b7280;">to {{ $record->end_date->format('M d, Y') }}</span>
+                                @endif
+                            </td>
+                            <td><span class="status-badge status-{{ $record->status }}">{{ ucfirst(str_replace('_', ' ', $record->status)) }}</span></td>
+                            <td>₱{{ number_format((float) ($record->amount ?? 0), 2) }}</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a class="btn btn-edit" href="{{ route('agent.module', ['module' => 'bookings', 'edit' => $record->id]) }}">Edit</a>
+                                </div>
+                            </td>
+                        </tr>
+                    @else
                     <tr>
                         @if ($showCoverUpload)
                             <td>
@@ -265,18 +399,82 @@
                             </td>
                         @endif
                     </tr>
+                    @endif
                 @empty
                     <tr>
-                        <td colspan="{{ $showCoverUpload ? 7 : 6 }}">No records found for this module.</td>
+                        <td colspan="{{ $isBookingModule ? 8 : ($showCoverUpload ? 7 : 6) }}">No records found for this module.</td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
     </div>
 
-    @if (method_exists($records, 'links'))
+    @if (method_exists($records, 'hasPages') && $records->hasPages())
+        @php
+            $query = request()->except(['page', 'edit']);
+            $currentPage = $records->currentPage();
+            $lastPage = $records->lastPage();
+            $startPage = max(1, $currentPage - 2);
+            $endPage = min($lastPage, $currentPage + 2);
+        @endphp
+
         <div style="padding: 16px 24px; border-top: 1px solid #e5e7eb;">
-            {{ $records->links() }}
+            <div class="pagination">
+                <form method="GET" action="{{ url()->current() }}">
+                    @foreach ($query as $key => $value)
+                        @if (is_array($value))
+                            @foreach ($value as $arrayValue)
+                                <input type="hidden" name="{{ $key }}[]" value="{{ $arrayValue }}">
+                            @endforeach
+                        @else
+                            <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                        @endif
+                    @endforeach
+                    <button type="submit" name="page" value="{{ max(1, $currentPage - 1) }}" @disabled($records->onFirstPage())>
+                        Previous
+                    </button>
+                </form>
+
+                @if ($startPage > 1)
+                    <button type="button" disabled>...</button>
+                @endif
+
+                @for ($page = $startPage; $page <= $endPage; $page++)
+                    <form method="GET" action="{{ url()->current() }}">
+                        @foreach ($query as $key => $value)
+                            @if (is_array($value))
+                                @foreach ($value as $arrayValue)
+                                    <input type="hidden" name="{{ $key }}[]" value="{{ $arrayValue }}">
+                                @endforeach
+                            @else
+                                <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                            @endif
+                        @endforeach
+                        <button type="submit" name="page" value="{{ $page }}" class="{{ $page === $currentPage ? 'active' : '' }}" @disabled($page === $currentPage)>
+                            {{ $page }}
+                        </button>
+                    </form>
+                @endfor
+
+                @if ($endPage < $lastPage)
+                    <button type="button" disabled>...</button>
+                @endif
+
+                <form method="GET" action="{{ url()->current() }}">
+                    @foreach ($query as $key => $value)
+                        @if (is_array($value))
+                            @foreach ($value as $arrayValue)
+                                <input type="hidden" name="{{ $key }}[]" value="{{ $arrayValue }}">
+                            @endforeach
+                        @else
+                            <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                        @endif
+                    @endforeach
+                    <button type="submit" name="page" value="{{ min($lastPage, $currentPage + 1) }}" @disabled(! $records->hasMorePages())>
+                        Next
+                    </button>
+                </form>
+            </div>
         </div>
     @endif
 </div>
@@ -294,7 +492,6 @@
         <div class="panel-header">
             <div>
                 <h3 class="panel-title">Agent Settings</h3>
-                <div class="panel-subtitle">Update the agent-specific settings.</div>
             </div>
         </div>
 

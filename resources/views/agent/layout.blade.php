@@ -24,19 +24,19 @@
         .nav-item-text { font-size: 14px; font-weight: 500; }
         .main-content { flex: 1; margin-left: 280px; transition: margin-left 0.3s; }
         @media (max-width: 1024px) { .main-content { margin-left: 0; } }
-        .header { background: white; border-bottom: 1px solid #e5e7eb; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 30; }
+        .header { background: white; border-bottom: 1px solid #e5e7eb; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; position: sticky; top: 0; z-index: 30; }
         .header-left { display: flex; align-items: center; gap: 16px; }
         .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
         @media (max-width: 1024px) { .hamburger { display: block; } }
         .header-title { font-size: 24px; font-weight: 700; color: #111827; }
-        .header-right { display: flex; align-items: center; gap: 16px; }
+        .header-right { display: flex; align-items: center; gap: 16px; margin-left: auto; }
         .search-container { position: relative; }
-        .search-input { width: 300px; height: 40px; padding-left: 40px; padding-right: 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; }
+        .search-input { width: 300px; max-width: 32vw; min-width: 180px; height: 40px; padding-left: 40px; padding-right: 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; }
         .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #9ca3af; }
         .icon-button { position: relative; background: none; border: none; padding: 8px; border-radius: 8px; cursor: pointer; color: #6b7280; transition: all 0.2s; }
         .icon-button:hover { background: #f3f4f6; color: #237f87; }
         .notification-badge { position: absolute; top: 4px; right: 4px; width: 8px; height: 8px; background: #ef4444; border-radius: 50%; }
-        .user-avatar { width: 40px; height: 40px; border-radius: 50%; background: #237f87; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; cursor: pointer; }
+        .user-avatar { width: 40px; height: 40px; min-width: 40px; border-radius: 50%; background: #237f87; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; cursor: pointer; flex: 0 0 40px; box-shadow: 0 0 0 2px rgba(35, 127, 135, 0.18); }
         .content { padding: 24px; }
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; margin-bottom: 24px; }
         .stat-card, .quick-actions, .table-container, .pending-requests, .panel { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
@@ -84,7 +84,9 @@
         .btn-secondary:hover { background: #e5e7eb; }
         .grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
         @media (max-width: 1024px) { .grid-2 { grid-template-columns: 1fr; } }
-        @media (max-width: 640px) { .search-input { width: 200px; } .header-title { font-size: 18px; } .stats-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 1200px) { .search-input { width: 240px; min-width: 160px; } }
+        @media (max-width: 900px) { .search-container { display: none; } .header { padding: 14px 16px; } }
+        @media (max-width: 640px) { .header-title { font-size: 18px; } .stats-grid { grid-template-columns: 1fr; } }
         .form-group { margin-bottom: 16px; }
         .form-label { display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 8px; }
         .form-input, .form-select, .form-textarea { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; font-family: 'Inter', sans-serif; }
@@ -114,16 +116,32 @@
         .info-row { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid #f3f4f6; }
         .info-label { font-size: 14px; color: #6b7280; font-weight: 500; }
         .info-value { font-size: 14px; color: #111827; font-weight: 600; text-align: right; }
+        .logout-modal { max-width: 420px; padding: 18px; }
+        .logout-modal .modal-body { color: #475467; }
+        .logout-actions { display: flex; gap: 10px; justify-content: flex-end; }
+        .logout-cancel-btn, .logout-confirm-btn { border: 1px solid transparent; border-radius: 10px; padding: 10px 14px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+        .logout-cancel-btn { background: #f8fafc; color: #334155; border-color: #dbe1ea; }
+        .logout-cancel-btn:hover { background: #eef2f7; }
+        .logout-confirm-btn { background: linear-gradient(135deg, #ef4444, #dc2626); color: #ffffff; box-shadow: 0 8px 18px rgba(220, 38, 38, 0.25); }
+        .logout-confirm-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(220, 38, 38, 0.3); }
+        .pagination { display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-top: 1.5rem; background: white; border-radius: 0.75rem; padding: 1rem; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+        .pagination button { padding: 0.5rem 1rem; border-radius: 0.5rem; border: none; background: #f3f4f6; cursor: pointer; transition: all 0.2s; font-weight: 500; }
+        .pagination button:hover:not(:disabled) { background: #e5e7eb; }
+        .pagination button.active { background: #140937; color: white; }
+        .pagination button:disabled { opacity: 0.5; cursor: not-allowed; }
+        .pagination .page-icon { width: 0; height: 0; }
+        .pagination svg, .pagination svg * { display: none !important; width: 0 !important; height: 0 !important; }
     </style>
+    @vite('resources/js/app.js')
 </head>
 <body>
     <div class="dashboard-container">
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="color: var(--admin-primary);">
+                        <path d="M3 12L21 3L13 21L10 13L3 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10 13L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     <span class="sidebar-logo-text">iWander</span>
                 </div>
@@ -187,7 +205,7 @@
                     </button>
                     <div>
                         <h1 class="header-title">@yield('page_title', 'Dashboard Overview')</h1>
-                        <div style="color:#6b7280;font-size:14px;">@yield('page_subtitle', 'Operational control center for the agent modules')</div>
+                        <div class="panel-subtitle">@yield('page_subtitle', '')</div>
                     </div>
                 </div>
 
@@ -240,6 +258,116 @@
                 }
             });
         });
+    </script>
+
+    <!-- Logout confirmation modal -->
+    <div id="logout-modal" class="modal-overlay" style="display:none; align-items:center; justify-content:center;">
+        <div class="modal logout-modal">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title">Confirm Logout</h3>
+                </div>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to logout?
+            </div>
+            <div class="modal-footer logout-actions">
+                <button type="button" class="logout-cancel-btn" onclick="closeLogoutModal()">Cancel</button>
+                <button type="button" class="logout-confirm-btn" id="confirm-logout-btn">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings modal -->
+    <div id="settings-modal" class="modal-overlay" style="display:none; align-items:center; justify-content:center;">
+        <div class="modal" style="max-width:520px; padding:18px;">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title">Settings</h3>
+                </div>
+                <button type="button" class="modal-close" onclick="document.getElementById('settings-modal').classList.remove('active')">Close</button>
+            </div>
+            <div class="modal-body">Agent workspace settings.</div>
+            <div class="modal-footer" style="display:flex; gap:8px; justify-content:flex-end;">
+                <button type="button" class="btn-secondary" onclick="document.getElementById('settings-modal').classList.remove('active')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- About modal -->
+    <div id="about-modal" class="modal-overlay" style="display:none; align-items:center; justify-content:center;">
+        <div class="modal" style="max-width:520px; padding:18px;">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title">About</h3>
+                </div>
+                <button type="button" class="modal-close" onclick="document.getElementById('about-modal').classList.remove('active')">Close</button>
+            </div>
+            <div class="modal-body">About the agent workspace.</div>
+            <div class="modal-footer" style="display:flex; gap:8px; justify-content:flex-end;">
+                <button type="button" class="btn-secondary" onclick="document.getElementById('about-modal').classList.remove('active')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            function bindLayoutLogout() {
+                const modal = document.getElementById('logout-modal');
+                const confirmBtn = document.getElementById('confirm-logout-btn');
+                const form = document.querySelector('form[action="{{ route('logout') }}"]');
+
+                if (!modal || !confirmBtn || !form || form.dataset.layoutLogoutBound === '1') {
+                    return;
+                }
+
+                form.dataset.layoutLogoutBound = '1';
+
+                function openLogoutModal() {
+                    modal.style.display = 'flex';
+                    modal.classList.add('active');
+                }
+
+                function closeLogoutModal() {
+                    modal.style.display = 'none';
+                    modal.classList.remove('active');
+                }
+
+                window.openLogoutModal = function (submitForm) {
+                    if (submitForm === form || !submitForm) {
+                        openLogoutModal();
+                    }
+                };
+                window.closeLogoutModal = closeLogoutModal;
+
+                form.addEventListener('submit', function (event) {
+                    if (form.dataset.logoutConfirmed === '1') {
+                        return;
+                    }
+
+                    event.preventDefault();
+                    openLogoutModal();
+                });
+
+                confirmBtn.addEventListener('click', function () {
+                    form.dataset.logoutConfirmed = '1';
+                    closeLogoutModal();
+                    form.submit();
+                });
+
+                modal.addEventListener('click', function (event) {
+                    if (event.target === modal) {
+                        closeLogoutModal();
+                    }
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', bindLayoutLogout);
+            } else {
+                bindLayoutLogout();
+            }
+        })();
     </script>
 </body>
 </html>

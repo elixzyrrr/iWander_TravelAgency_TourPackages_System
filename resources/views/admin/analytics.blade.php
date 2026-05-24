@@ -29,7 +29,7 @@
             <div class="admin-card-header">
                 <div>
                     <h2 class="admin-card-title">Role Breakdown</h2>
-                    <p class="admin-card-copy">Grouped directly from the users table.</p>
+
                 </div>
             </div>
             <div class="admin-metric-list">
@@ -45,7 +45,7 @@
             <div class="admin-card-header">
                 <div>
                     <h2 class="admin-card-title">Status Breakdown</h2>
-                    <p class="admin-card-copy">Current user lifecycle distribution.</p>
+
                 </div>
             </div>
             <div class="admin-metric-list">
@@ -62,7 +62,7 @@
         <div class="admin-card-header">
             <div>
                 <h2 class="admin-card-title">Top Credit Limits</h2>
-                <p class="admin-card-copy">Highest credit limits across users.</p>
+
             </div>
         </div>
         <div class="admin-table-wrap">

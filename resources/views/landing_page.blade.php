@@ -12,9 +12,9 @@
     <nav>
         <div class="nav-container">
             <a href="index.html" class="logo">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M3 12L21 3L13 21L10 13L3 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 13L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <span class="logo-text">iWander</span>
             </a>
@@ -23,13 +23,12 @@
                 <a href="#destination">Destination</a>
                 <a href="#tours">Tours</a>
                 <a href="#about">About</a>
-                
                 <a href="#contacts">Contacts</a>
             </div>
 
             <div class="auth-buttons">
                 <a href="{{ route('login') }}" class="btn btn-login">Login</a>
-                <a href="{{ route('register') }}" class="btn btn-signup">Sign Up</a>
+                <a href="{{ route('signup') }}" class="btn btn-signup">Sign Up</a>
             </div>
         </div>
     </nav>
@@ -44,7 +43,7 @@
                 <h1 class="hero-title">EXPLORE LUXURY TRAVEL<br>LIKE NEVER BEFORE</h1>
                 <p class="hero-subtitle">Exclusive destinations, personalized experiences, unforgettable memories</p>
                 <div class="button-container">
-                    <button class="btn btn-explore">Explore offerings</button>
+                    <a href="{{ route('signup') }}" class="btn btn-explore">Explore offerings</a>
                 </div>
             </div>
 
@@ -70,7 +69,7 @@
                         <input type="date" value="2026-09-10">
                     </div>
                     <div class="search-field" style="display: flex; align-items: flex-end;">
-                        <button class="btn btn-search">Search</button>
+                        <a href="{{ route('signup') }}" class="btn btn-search">Search</a>
                     </div>
                 </div>
             </div>
@@ -120,7 +119,8 @@
                                 <span>2-8 People</span>
                             </div>
                         </div>
-                        <button class="btn btn-book">Book Now</button>
+                        <a href="{{ route('signup') }}" class="btn btn-book">Book Now</a>
+
                     </div>
                 </div>
 
@@ -158,7 +158,7 @@
                                 <span>2-6 People</span>
                             </div>
                         </div>
-                        <button class="btn btn-book">Book Now</button>
+                        <a href="{{ route('signup') }}" class="btn btn-book">Book Now</a>
                     </div>
                 </div>
 
@@ -196,13 +196,13 @@
                                 <span>2-10 People</span>
                             </div>
                         </div>
-                        <button class="btn btn-book">Book Now</button>
+                        <a href="{{ route('signup') }}" class="btn btn-book">Book Now</a>
                     </div>
                 </div>
             </div>
 
             <div class="button-container">
-                <button class="btn-see-more">See more</button>
+                <a href="{{ route('signup') }}" class="btn-see-more">See more</a>
             </div>
         </div>
     </section>

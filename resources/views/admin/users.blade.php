@@ -10,7 +10,7 @@
             <div class="admin-card-header">
                 <div>
                     <h2 class="admin-card-title">Create User</h2>
-                    <p class="admin-card-copy">This form writes directly into the users table.</p>
+
                 </div>
             </div>
 
@@ -70,7 +70,7 @@
             <div class="admin-card-header">
                 <div>
                     <h2 class="admin-card-title">User Counts</h2>
-                    <p class="admin-card-copy">A quick read on the database state.</p>
+
                 </div>
             </div>
                 <div class="admin-metric-list">
@@ -86,7 +86,7 @@
         <div class="admin-card-header">
             <div>
                 <h2 class="admin-card-title">All Users</h2>
-                    <p class="admin-card-copy">Edit or delete users from the database. Account status is managed in Edit User.</p>
+
             </div>
         </div>
 
