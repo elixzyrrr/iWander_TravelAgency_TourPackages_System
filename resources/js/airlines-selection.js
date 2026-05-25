@@ -25,6 +25,11 @@
                 airlineSelectionData.flightAmount = bookingItem.price || airlineSelectionData.flightAmount;
                 airlineSelectionData.flightStartDate = bookingItem.startDate || airlineSelectionData.flightStartDate;
                 airlineSelectionData.flightEndDate = bookingItem.endDate || airlineSelectionData.flightEndDate;
+
+                const fallbackFlightId = bookingItem.sourceId || bookingItem.agentRecordId || bookingItem.agent_record_id;
+                if (fallbackFlightId) {
+                    airlineSelectionData.flightId = fallbackFlightId;
+                }
             }
         } catch (error) {
             console.warn('Unable to parse selectedBookingItem for airlines fallback:', error);

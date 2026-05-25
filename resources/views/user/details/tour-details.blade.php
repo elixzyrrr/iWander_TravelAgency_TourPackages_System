@@ -35,8 +35,9 @@
             <div class="hero-overlay"></div>
             <div class="hero-content">
                 <div class="tour-info">
-                    <svg class="tour-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3.724a1 1 0 001.447-.894V5.618a1 1 0 00-1.447-.894L15 7m0 13V7m6 6.618V5.618a1 1 0 00-1.447-.894L21 7"/>
+                    <svg class="tour-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                        <path d="M2 12l19-9-4 9 4 9-19-9z" />
+                        <path d="M2 12l7 2m7-2l-7-2" />
                     </svg>
                     <span class="tour-name">{{ $agentRecord->destination ?? 'Tour Package' }}</span>
                 </div>

@@ -128,11 +128,35 @@ body {
     flex-shrink: 0;
 }
 
+.page-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.page-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    background: rgba(35, 127, 135, 0.1);
+    flex-shrink: 0;
+}
+
+.page-icon svg {
+    width: 20px;
+    height: 20px;
+    color: var(--primary-color);
+}
+
 .page-title {
     font-size: 32px;
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: 8px;
+    margin-bottom: 0;
     line-height: 1.2;
 }
 

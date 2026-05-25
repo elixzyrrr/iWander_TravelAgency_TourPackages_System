@@ -38,7 +38,15 @@
                 </svg>
                 <span class="breadcrumb-item active">Select Airline</span>
             </div>
-            <h1 class="page-title">Select Your Preferred Airline</h1>
+            <div class="page-title-row">
+                <span class="page-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                        <path d="M2 12l19-9-4 9 4 9-19-9z" />
+                        <path d="M2 12l7 2m7-2l-7-2" />
+                    </svg>
+                </span>
+                <h1 class="page-title">Select Your Preferred Airline</h1>
+            </div>
             <p class="page-subtitle">Choose from available airlines for {{ $flight->destination ?? 'your destination' }}</p>
         </div>
 
