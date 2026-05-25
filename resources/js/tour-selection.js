@@ -98,8 +98,8 @@
         // Store to localStorage for multi-step booking
         localStorage.setItem('selectedBookingItem', JSON.stringify(bookingItem));
 
-        // Redirect to booking page
-        window.location.href = `/bookings/steps/booking?type=tours`;
+        // Redirect to airlines selection page
+        window.location.href = '/bookings/steps/airlines';
     };
 
     // Initialize when DOM is ready

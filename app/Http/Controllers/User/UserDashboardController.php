@@ -417,6 +417,36 @@ class UserDashboardController extends Controller implements HasMiddleware
             ])
             ->all();
 
+        if (count($rooms) > 8) {
+            $rooms = array_slice($rooms, 0, 8);
+        }
+
+        if (count($rooms) < 4) {
+            $fallbackRooms = [];
+            $roomTypes = ['Deluxe Suite', 'Ocean View Room', 'Family Room', 'Executive Room', 'Standard Twin', 'Premier King'];
+            $amenitiesPool = [
+                ['Free Wi-Fi', 'Breakfast included', 'City view'],
+                ['Sea view', 'Balcony', 'Mini bar'],
+                ['Spacious layout', '55" TV', 'Room service'],
+                ['King bed', 'Pool access', 'Complimentary water'],
+            ];
+
+            for ($i = 0; $i < 4; $i++) {
+                $fallbackRooms[] = [
+                    'id' => 2000 + $i,
+                    'roomType' => $roomTypes[$i % count($roomTypes)],
+                    'capacity' => 2 + ($i % 3),
+                    'availableRooms' => 3 + ($i * 2),
+                    'pricePerNight' => 3200 + ($i * 1100),
+                    'description' => "Enjoy a comfortable stay with premium facilities and flexible check-in options.",
+                    'amenities' => $amenitiesPool[$i % count($amenitiesPool)],
+                ];
+            }
+
+            $rooms = array_merge($rooms, $fallbackRooms);
+            $rooms = array_slice($rooms, 0, 8);
+        }
+
         $data = [
             'user' => $user,
             'hotel' => $hotel,
@@ -424,6 +454,53 @@ class UserDashboardController extends Controller implements HasMiddleware
         ];
         
         return response(view('user.hotels.rooms-selection', $data)->render());
+    }
+
+    public function showBookingAirlines(Request $request): Response
+    {
+        $user = $request->user();
+
+        $flight = (object) [
+            'id' => 0,
+            'title' => 'Flight Booking',
+            'destination' => 'Selected Trip',
+            'amount' => 0,
+            'description' => 'Choose an airline to continue your booking.',
+            'cover_image' => null,
+        ];
+
+        $airlines = [
+            [
+                'id' => 1,
+                'name' => 'Philippine Airlines',
+                'code' => 'PR',
+                'icon' => '🇵🇭',
+                'flights' => [
+                    ['departure' => '08:00', 'arrival' => '15:30', 'duration' => '7h 30m', 'stops' => 0, 'price' => 45000],
+                    ['departure' => '14:00', 'arrival' => '21:30', 'duration' => '7h 30m', 'stops' => 0, 'price' => 42000],
+                ],
+            ],
+            [
+                'id' => 2,
+                'name' => 'Cebu Pacific',
+                'code' => '5J',
+                'icon' => '✈️',
+                'flights' => [
+                    ['departure' => '09:30', 'arrival' => '17:00', 'duration' => '7h 30m', 'stops' => 0, 'price' => 39000],
+                    ['departure' => '16:00', 'arrival' => '23:30', 'duration' => '7h 30m', 'stops' => 0, 'price' => 37000],
+                ],
+            ],
+        ];
+
+        $data = [
+            'user' => $user,
+            'flight' => $flight,
+            'airlines' => $airlines,
+            'flightStartDate' => null,
+            'flightEndDate' => null,
+        ];
+
+        return response(view('user.airlines.airlines-selection', $data)->render());
     }
 
     public function showTourDates(Request $request, int $tourId): Response

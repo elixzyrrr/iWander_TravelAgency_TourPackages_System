@@ -18,7 +18,7 @@
                 </svg>
                 <span class="logo-text">iWander</span>
             </a>
-            <a href="{{ route('detail.show', ['type' => 'flights', 'id' => $flight->id]) }}" class="back-btn">
+            <a href="{{ $flight->id ? route('detail.show', ['type' => 'flights', 'id' => $flight->id]) : route('user.dashboard') }}" class="back-btn">
                 <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                 </svg>

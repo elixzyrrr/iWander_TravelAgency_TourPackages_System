@@ -52,6 +52,9 @@ Route::middleware('auth')->get('/flights/airlines/{flightId}', [UserDashboardCon
     ->where('flightId', '\d+')
     ->name('airlines.select');
 
+Route::middleware('auth')->get('/bookings/steps/airlines', [UserDashboardController::class, 'showBookingAirlines'])
+    ->name('booking.airlines');
+
 // Rooms selection for hotels
 Route::middleware('auth')->get('/hotels/rooms/{hotelId}', [UserDashboardController::class, 'showRooms'])
     ->where('hotelId', '\d+')

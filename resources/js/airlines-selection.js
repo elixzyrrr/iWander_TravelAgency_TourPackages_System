@@ -12,11 +12,30 @@
         return;
     }
 
+    // If the airlines page was reached from a room or tour selection,
+    // use the stored booking item to populate the airline selection summary.
+    const storedBookingItem = localStorage.getItem('selectedBookingItem');
+    if (storedBookingItem && !airlineSelectionData.flightId) {
+        try {
+            const bookingItem = JSON.parse(storedBookingItem);
+            if (bookingItem) {
+                airlineSelectionData.flightTitle = bookingItem.title || airlineSelectionData.flightTitle;
+                airlineSelectionData.flightDescription = bookingItem.description || airlineSelectionData.flightDescription;
+                airlineSelectionData.flightDestination = bookingItem.destination || airlineSelectionData.flightDestination;
+                airlineSelectionData.flightAmount = bookingItem.price || airlineSelectionData.flightAmount;
+                airlineSelectionData.flightStartDate = bookingItem.startDate || airlineSelectionData.flightStartDate;
+                airlineSelectionData.flightEndDate = bookingItem.endDate || airlineSelectionData.flightEndDate;
+            }
+        } catch (error) {
+            console.warn('Unable to parse selectedBookingItem for airlines fallback:', error);
+        }
+    }
+
     /**
      * Initialize airlines selection page
      */
     function initAirlinesSelection() {
-        console.log('Initializing airlines selection page for flight:', airlineSelectionData.flightId);
+        console.log('Initializing airlines selection page for flight:', airlineSelectionData.flightId || 'fallback');
         attachEventListeners();
     }
 
